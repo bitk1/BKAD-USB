@@ -4,14 +4,14 @@
 sudo apt-get update
 sudo apt-get install -y nodejs npm git
 
-# Clone the BKAD-USB repository
-git clone https://github.com/bitk1/BKAD-USB.git
-
 # Navigate to the React project directory
-cd BKAD-USB/bkad-usb-react
+cd bkad-usb-react
 
 # Install project dependencies
 npm install
+
+# Set NODE_OPTIONS environment variable
+export NODE_OPTIONS=--openssl-legacy-provider
 
 # Build the React app
 npm run build
