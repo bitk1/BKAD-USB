@@ -1,0 +1,16 @@
+{
+  "name": "bkad-usb",
+  "version": "1.0.0",
+  "description": "BitKnowledge Archive Device USB Edition",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^24.0.0",
+    "ipfs-http-client": "^56.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
+
