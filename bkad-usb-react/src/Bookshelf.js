@@ -6,10 +6,8 @@ const ipfs = create({ host: 'localhost', port: '5001', protocol: 'http' });
 const Bookshelf = () => {
     const [files, setFiles] = useState([]);
 
-    const handleDrop = async (event) => {
-        event.preventDefault();
-        console.log('File(s) dropped');
-        const uploadedFiles = event.dataTransfer.files;
+    const handleFileUpload = async (event) => {
+        const uploadedFiles = event.target.files;
         for (let i = 0; i < uploadedFiles.length; i++) {
             const file = uploadedFiles[i];
             console.log('Uploading file:', file.name);
@@ -20,12 +18,9 @@ const Bookshelf = () => {
     };
 
     return (
-        <div 
-            onDrop={handleDrop}
-            onDragOver={(event) => event.preventDefault()}
-            style={{ border: '1px solid black', padding: '20px', minHeight: '200px', marginTop: '20px' }}
-        >
+        <div style={{ border: '1px solid black', padding: '20px', minHeight: '200px', marginTop: '20px' }}>
             <h3>Bookshelf</h3>
+            <input type="file" multiple onChange={handleFileUpload} />
             <div>
                 {files.map((file, index) => (
                     <div key={index} onClick={async () => {
