@@ -2,7 +2,7 @@
   "name": "bkad-usb",
   "version": "1.0.0",
   "description": "BitKnowledge Archive Device USB Edition",
-  "main": "main.js",
+  "main": "app/main.js",
   "scripts": {
     "start": "electron ."
   },
