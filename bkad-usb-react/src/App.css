@@ -13,6 +13,11 @@
     color: white;
 }
 
+p {
+    margin: 20px;
+    font-size: 1.2em;
+}
+
 .Bookshelf {
     border: 1px solid #ccc;
     min-height: 150px;
