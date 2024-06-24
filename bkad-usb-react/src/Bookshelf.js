@@ -8,12 +8,33 @@ const Bookshelf = () => {
 
     const handleFileUpload = async (event) => {
         const uploadedFiles = event.target.files;
+        const newFiles = [];
+
         for (let i = 0; i < uploadedFiles.length; i++) {
             const file = uploadedFiles[i];
             console.log('Uploading file:', file.name);
-            const added = await ipfs.add(file);
-            console.log('File added to IPFS:', added);
-            setFiles((prevFiles) => [...prevFiles, { name: file.name, cid: added.cid.toString() }]);
+
+            try {
+                const added = await ipfs.add(file);
+                console.log('File added to IPFS:', added);
+                newFiles.push({ name: file.name, cid: added.cid.toString() });
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
+        }
+
+        setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    };
+
+    const handleFileRetrieval = async (cid, name) => {
+        console.log('Retrieving file:', name);
+
+        try {
+            const fileContent = await ipfs.cat(cid);
+            const content = new TextDecoder().decode(fileContent);
+            alert(`File content for ${name}: ${content}`);
+        } catch (error) {
+            console.error('Error retrieving file:', error);
         }
     };
 
@@ -23,11 +44,7 @@ const Bookshelf = () => {
             <input type="file" multiple onChange={handleFileUpload} />
             <div>
                 {files.map((file, index) => (
-                    <div key={index} onClick={async () => {
-                        console.log('Retrieving file:', file.name);
-                        const fileContent = await ipfs.cat(file.cid);
-                        alert(`File content: ${new TextDecoder().decode(fileContent)}`);
-                    }} style={{ border: '1px solid gray', margin: '5px', padding: '5px', cursor: 'pointer' }}>
+                    <div key={index} onClick={() => handleFileRetrieval(file.cid, file.name)} style={{ border: '1px solid gray', margin: '5px', padding: '5px', cursor: 'pointer' }}>
                         {file.name}
                     </div>
                 ))}
