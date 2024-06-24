@@ -1,4 +1,4 @@
-echo "import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { create } from 'ipfs-http-client';
 
 const ipfs = create({ host: 'localhost', port: '5001', protocol: 'http' });
@@ -52,7 +52,7 @@ const Bookshelf = () => {
         try {
             const fileContent = await ipfs.cat(cid);
             const content = new TextDecoder().decode(fileContent);
-            alert(\`File content for \${name}: \${content}\`);
+            alert(`File content for ${name}: ${content}`);
         } catch (error) {
             console.error('Error retrieving file:', error);
         }
@@ -61,7 +61,7 @@ const Bookshelf = () => {
     return (
         <div style={{ border: '1px solid black', padding: '20px', minHeight: '200px', marginTop: '20px' }}>
             <h3>Bookshelf</h3>
-            <input type='file' multiple onChange={handleFileUpload} />
+            <input type="file" multiple onChange={handleFileUpload} />
             <div>
                 {files.map((file, index) => (
                     <div key={index} onClick={() => handleFileRetrieval(file.cid, file.name)} style={{ border: '1px solid gray', margin: '5px', padding: '5px', cursor: 'pointer' }}>
@@ -73,5 +73,5 @@ const Bookshelf = () => {
     );
 };
 
-export default Bookshelf;" > src/Bookshelf.js
+export default Bookshelf;
 
