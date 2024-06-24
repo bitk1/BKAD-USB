@@ -1,10 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { create } from 'ipfs-http-client';
 
 const ipfs = create({ host: 'localhost', port: '5001', protocol: 'http' });
 
 const Bookshelf = () => {
     const [files, setFiles] = useState([]);
+
+    // Function to load all files from IPFS
+    const loadFiles = async () => {
+        try {
+            const files = [];
+            for await (const file of ipfs.pin.ls()) {
+                if (file.type === 'recursive') {
+                    files.push({ name: file.cid.toString(), cid: file.cid.toString() });
+                }
+            }
+            setFiles(files);
+        } catch (error) {
+            console.error('Error loading files from IPFS:', error);
+        }
+    };
+
+    // Load files when the component mounts
+    useEffect(() => {
+        loadFiles();
+    }, []);
 
     const handleFileUpload = async (event) => {
         const uploadedFiles = event.target.files;
